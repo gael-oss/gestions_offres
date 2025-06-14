@@ -1,19 +1,21 @@
-{# templates/offre/edit.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Modifier l’offre{% endblock %}
 
 {% block body %}
-  <h1>Modifier l’offre</h1>
+<h1 class="mb-3">Modifier l’offre</h1>
 
-  {{ form_start(form) }}
-      {{ form_row(form.titre) }}
-      {{ form_row(form.description) }}
-      {{ form_row(form.lieu) }}
-      {{ form_row(form.typeContrat) }}
-      {{ form_row(form.salaire) }}
-      {{ form_row(form.datePublication) }}
-      <button class="btn btn-success">Mettre à jour</button>
-      <a href="{{ path('offre_index') }}" class="btn btn-secondary">Annuler</a>
-  {{ form_end(form) }}
+{{ form_start(form, {'attr': {'class': 'bg-white p-4 shadow-sm rounded'}}) }}
+    {{ form_row(form.titre) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.lieu) }}
+    {{ form_row(form.typeContrat) }}
+    {{ form_row(form.salaire) }}
+    {{ form_row(form.datePublication) }}
+
+    <button class="btn btn-success">
+        <i class="bi bi-save"></i> Mettre à jour
+    </button>
+    <a href="{{ path('offre_index') }}" class="btn btn-secondary">Annuler</a>
+{{ form_end(form) }}
 {% endblock %}

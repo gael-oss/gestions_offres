@@ -4,40 +4,46 @@
 {% block title %}Détails de l’offre{% endblock %}
 
 {% block body %}
-  <h1>{{ offre.titre }}</h1>
+<h1 class="mb-3">{{ offre.titre }}</h1>
 
-  {% for label, messages in app.flashes %}
+{# Flash messages #}
+{% for label, messages in app.flashes %}
     <div class="alert alert-{{ label }}">
-      {% for message in messages %}
-        {{ message }}
-      {% endfor %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
     </div>
-  {% endfor %}
+{% endfor %}
 
-  <ul>
-    <li><strong>Description :</strong> {{ offre.description }}</li>
-    <li><strong>Lieu :</strong> {{ offre.lieu }}</li>
-    <li><strong>Type de contrat :</strong> {{ offre.typeContrat }}</li>
-    <li><strong>Salaire :</strong> {{ offre.salaire }} €</li>
-    <li><strong>Publiée le :</strong> {{ offre.datePublication|date('Y-m-d H:i') }}</li>
-  </ul>
+{# Informations de l’offre #}
+<div class="card mb-4">
+    <div class="card-body">
+        <p><strong>Description&nbsp;:</strong> {{ offre.description }}</p>
+        <p><strong>Lieu&nbsp;:</strong> {{ offre.lieu }}</p>
+        <p><strong>Type de contrat&nbsp;:</strong> {{ offre.typeContrat }}</p>
+        <p><strong>Salaire&nbsp;:</strong> {{ offre.salaire }} FCFA</p>
+        <p><strong>Publiée le&nbsp;:</strong> {{ offre.datePublication|date('d/m/Y') }}</p>
+    </div>
+</div>
 
-  {% if is_granted('ROLE_USER') %}
+{# Bouton de candidature #}
+{% if is_granted('ROLE_USER') %}
     <form method="post"
           action="{{ path('offre_postuler', {id: offre.id}) }}"
           onsubmit="return confirm('Confirmez-vous votre candidature ?');">
-      <input type="hidden" name="_token"
-             value="{{ csrf_token('postuler' ~ offre.id) }}">
-      <button class="btn btn-primary mb-3">Postuler à cette offre</button>
+        <input type="hidden"
+               name="_token"
+               value="{{ csrf_token('postuler' ~ offre.id) }}">
+        <button class="btn btn-primary mb-3">
+            <i class="bi bi-send"></i> Postuler à cette offre
+        </button>
     </form>
-  {% else %}
-    <p>
-      <a href="{{ path('app_login') }}" class="btn btn-secondary mb-3">
+{% else %}
+    <a href="{{ path('app_login') }}" class="btn btn-secondary mb-3">
         Connectez-vous pour postuler
-      </a>
-    </p>
-  {% endif %}
+    </a>
+{% endif %}
 
-  <a href="{{ path('offre_edit', {id: offre.id}) }}" class="btn btn-warning">Modifier</a>
-  <a href="{{ path('offre_index') }}" class="btn btn-secondary">Retour à la liste</a>
+<a href="{{ path('offre_edit', {id: offre.id}) }}" class="btn btn-warning me-2">Modifier</a>
+<a href="{{ path('offre_index') }}" class="btn btn-outline-secondary">Retour à la liste</a>
 {% endblock %}

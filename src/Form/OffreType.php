@@ -38,8 +38,8 @@ class OffreType extends AbstractType
             ])
             ->add('salaire', MoneyType::class, [
                 'label' => 'Salaire',
-                'currency' => 'EUR',
-                'scale' => 2,
+                'currency' => 'XOF',
+                'scale' => 0,
             ])
             ->add('datePublication', DateTimeType::class, [
                 'label' => 'Date de publication',
