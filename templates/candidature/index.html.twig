@@ -1,0 +1,30 @@
+{# templates/candidature/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Toutes les candidatures{% endblock %}
+
+{% block body %}
+  <h1>Toutes les candidatures</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Offre</th>
+        <th>Candidat</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for cand in candidatures %}
+      <tr>
+        <td>{{ cand.id }}</td>
+        <td>{{ cand.offre.titre }}</td>
+        <td>{{ cand.user.email }}</td>
+        <td>{{ cand.datePostulation|date('Y-m-d H:i') }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="4">Aucune candidature</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,29 @@
+{# templates/candidature/par_offre.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Candidatures pour {{ offre.titre }}{% endblock %}
+
+{% block body %}
+  <h1>Candidatures pour : {{ offre.titre }}</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Candidat</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for cand in candidatures %}
+      <tr>
+        <td>{{ cand.id }}</td>
+        <td>{{ cand.user.email }}</td>
+        <td>{{ cand.datePostulation|date('Y-m-d H:i') }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="3">Aucune candidature pour cette offre</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <a href="{{ path('offre_index') }}" class="btn btn-secondary">Retour aux offres</a>
+{% endblock %}

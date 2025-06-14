@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des offres{% endblock %}
+
+{% block body %}
+<h1>Liste des offres</h1>
+
+<a href="{{ path('offre_new') }}" class="btn btn-primary mb-3">Créer une nouvelle offre</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Lieu</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for offre in offres %}
+        <tr>
+            <td>{{ offre.titre }}</td>
+            <td>{{ offre.lieu }}</td>
+            <td>{{ offre.typeContrat }}</td>
+            <td>{{ offre.datePublication|date('Y-m-d H:i') }}</td>
+            <td>
+                <a href="{{ path('offre_show', {'id': offre.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                <a href="{{ path('offre_edit', {'id': offre.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                {{ include('offre/_delete_form.html.twig') }}
+            </td>
+        </tr>
+    {% else %}
+        <tr><td colspan="5">Aucune offre trouvée</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
