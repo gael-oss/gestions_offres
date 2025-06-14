@@ -1,5 +1,5 @@
+# config/routes.yaml
+# Déclare toutes les routes grâce aux attributs #[Route] dans src/Controller
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+  resource: '../src/Controller'
+  type: attribute

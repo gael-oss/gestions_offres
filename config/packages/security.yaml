@@ -1,11 +1,9 @@
 # config/packages/security.yaml
 security:
-    # Encodage des mots de passe
     password_hashers:
         App\Entity\User:
             algorithm: auto
 
-    # Chargement des utilisateurs depuis la base via l’entité User
     providers:
         app_user_provider:
             entity:
@@ -18,32 +16,36 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        # Pare-feu principal
+        # Désactive complètement la sécurité pour la registration
+        registration:
+            pattern: ^/register$
+            security: false
+
+        # Pare-feu principal pour le reste de l’application
         main:
             pattern: ^/
             provider: app_user_provider
             lazy: true
-            # Formulaire de login
+
             form_login:
                 login_path: app_login
                 check_path: app_login
                 default_target_path: offre_index
                 username_parameter: _username
                 password_parameter: _password
-            # Logout
+
             logout:
                 path: app_logout
                 target: app_login
 
-    # Contrôles d’accès
     access_control:
-        # Seules les personnes authentifiées peuvent accéder aux offres et postuler
-        - { path: ^/offre/\d+/postuler$, roles: ROLE_USER }
-        - { path: ^/offre,           roles: ROLE_USER }
-        # Sécurise l’interface de candidatures
-        - { path: ^/candidatures,    roles: ROLE_USER }
+        # On garde cette règle pour le principe, mais elle est redondante
+        - { path: ^/register,      roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
-# Configurations spécifiques à l’environnement de test
+        - { path: ^/offre/\d+/postuler$, roles: ROLE_USER }
+        - { path: ^/offre,         roles: ROLE_USER }
+        - { path: ^/candidatures,  roles: ROLE_USER }
+
 when@test:
     security:
         password_hashers:
